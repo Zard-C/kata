@@ -15,8 +15,24 @@ bool isPrime(int n)
     return true; 
 }
 
-// 因数分解 
+// 因数分解: 试除法
 using std::vector; 
+vector<int> factorization(int n)
+{
+    vector<int> res; 
+
+    for(int i = 2; i*i <= n; ++i)
+    {
+        while(n % i == 0)
+        {
+            res.push_back(i); 
+            n /= i; 
+        }
+    }
+
+    if( n != 1) res.push_back(n);
+    return std::move(res); 
+}
 
 
 
@@ -34,10 +50,25 @@ void test1()
     std::cout << '\n'; 
 }
 
+void test2(int n)
+{
+    using namespace std; 
+    using namespace tt0; 
+    
+    vector<int> res = factorization(n); 
+
+    cout << n << " contains: "; 
+    for(const int & i : res)
+    {
+        cout << i <<" "; 
+    }
+    cout << endl; 
+}
 
 
 int main()
 {
     test1(); 
+    test2(65535);
     return 0; 
 }
