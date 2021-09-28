@@ -15,7 +15,7 @@ bool isPrime(int n)
     return true; 
 }
 
-// 因数分解: 试除法
+// 质数因数分解: 试除法
 using std::vector; 
 vector<int> factorization(int n)
 {
@@ -34,6 +34,15 @@ vector<int> factorization(int n)
     return std::move(res); 
 }
 
+// gcd greatet common divisor
+int gcd(int m, int n)
+{
+    // 辗转相除法
+
+
+
+    return 0; 
+}
 
 
 
@@ -57,7 +66,7 @@ void test2(int n)
     
     vector<int> res = factorization(n); 
 
-    cout << n << " contains: "; 
+    cout << n << " factorized: "; 
     for(const int & i : res)
     {
         cout << i <<" "; 
@@ -69,6 +78,6 @@ void test2(int n)
 int main()
 {
     test1(); 
-    test2(65535);
+    test2(257);
     return 0; 
 }
