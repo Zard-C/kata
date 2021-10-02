@@ -16,6 +16,15 @@ std::ostream& operator<<(std::ostream& os, std::vector<int>& vec)
 namespace tt0
 {
 
+// bubble sort 
+// selection sort
+// insert_sort
+// heapsort
+// mergesort
+// quicksort 
+// shuffle 
+
+
 using std::vector; 
 
 // bubblesort 
