@@ -27,7 +27,7 @@ namespace tt0
 
 using std::vector; 
 
-// bubblesort 
+// bubblesort version 2 
 void bubblesort(vector<int>& vec, int lo, int hi)
 {
     bool  issorted = false; 
