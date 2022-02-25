@@ -69,21 +69,13 @@ struct RingBuffer
 
     T pop_front(void)
     {
-        assert(isEmpty()); 
+        assert(!isEmpty()); 
         Rank pos = front; 
         front  = (front + 1) % capacity_; 
         return buffer[pos]; 
     }
 
 }; 
-
-
-
-
-
-
-
-
 }
 
 
