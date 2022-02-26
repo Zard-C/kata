@@ -7,7 +7,6 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <string.h>
-#include <mutex> 
 
 
 class Test
@@ -63,10 +62,8 @@ double getdetlatimeofday(struct timeval *begin, struct timeval *end)
 }
 
 utils::RingBuffer<Test> queue(1 << 12);
-std::mutex mutex_;
 
-
-constexpr size_t N = (10 * (1 << 20));
+#define N (10 * (1 << 20))
 
 void produce()
 {
@@ -75,16 +72,13 @@ void produce()
     unsigned int i = 0;
     while(i < N)
     {
-        mutex_.lock();
         if(!queue.isFull())
         {
             queue.push_back(Test(i % 1024, i)); 
             ++i;
         }
         //std::cout << i << std::endl;
-        mutex_.unlock();
     }
-
     
     gettimeofday(&end, NULL);
     double tm = getdetlatimeofday(&begin, &end);
@@ -99,9 +93,8 @@ void consume()
     gettimeofday(&begin, NULL);
     unsigned int i = 0;
     size_t count = 0; 
-    while(i < N/2)
+    while(i < N)
     {
-        mutex_.lock();
         if(!queue.isEmpty())
         {
             test = queue.pop_front(); 
@@ -110,10 +103,9 @@ void consume()
                 ++count;
             }
             ++i; 
-        
         }
-        mutex_.unlock();
     }
+    printf("seq: %s\n", count == i ? "success" : " failed"); 
     gettimeofday(&end, NULL);
     double tm = getdetlatimeofday(&begin, &end);
     printf("[%lu] consumer: %f MB/s %f msg/s elapsed= %f, size= %u \n", pthread_self(), N * sizeof(Test) * 1.0 / (tm * 1024 * 1024), N * 1.0 / tm, tm, i);
@@ -123,13 +115,10 @@ void consume()
 
 int main(int argc, char const *argv[])
 {
-
     std::thread producer1(produce);
-    std::thread consumer1(consume);
-    std::thread consumer2(consume); 
+    std::thread consumer(consume);
     producer1.join();
-    consumer1.join(); 
-    consumer2.join();
+    consumer.join(); 
 
     return 0;
 }
