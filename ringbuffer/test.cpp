@@ -87,7 +87,7 @@ void produce()
 
 void consume()
 {
-    sleep(1);
+    //sleep(1);
     Test test;
     struct timeval begin, end;
     gettimeofday(&begin, NULL);
