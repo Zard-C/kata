@@ -31,7 +31,7 @@ struct RingBuffer
     {
         if(buffer != nullptr)
         {
-            for(Rank r = front; r != rear; r = (r  + 1) % capacity_)
+            for(int r = front; r != rear; r = (r  + 1) % capacity_)
             {
                 buffer[r].~T();                 
             }
@@ -58,6 +58,11 @@ struct RingBuffer
         buffer[rear] = value; 
         rear= (rear + 1) % capacity_; 
 
+    }
+
+    double load_factor(void)
+    {
+        return (capacity_ -1.0 ) / capacity_; 
     }
 
     void push_back(T&& value)
